@@ -1,15 +1,5 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  Keyboard,
-  FlatList,
-  Switch,
-  Image,
-} from 'react-native';
+import {StyleSheet, View, Text, TextInput, TouchableOpacity, Keyboard, FlatList, Switch, Image, } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class App extends Component {
