@@ -1,5 +1,15 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, Keyboard, FlatList, Switch, Image } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Keyboard,
+  FlatList,
+  Switch,
+  Image,
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class App extends Component {
@@ -52,6 +62,11 @@ class App extends Component {
     this.setState({ tarefas: novasTarefas });
   };
 
+  excluirTarefa = (id) => {
+    const tarefasAtualizadas = this.state.tarefas.filter((tarefa) => tarefa.id !== id);
+    this.setState({ tarefas: tarefasAtualizadas });
+  };
+
   renderTarefa = ({ item }) => (
     <View style={styles.tarefaContainer}>
       <Text
@@ -62,12 +77,17 @@ class App extends Component {
       >
         {item.texto}
       </Text>
-      <Switch
-        value={item.concluida}
-        onValueChange={() => this.alternarConclusao(item.id)}
-        trackColor={{ false: '#d9c4ec', true: '#c7afe7' }} 
-        thumbColor={item.concluida ? '#9a7eaf' : '#e0c6a8'} 
-      />
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Switch
+          value={item.concluida}
+          onValueChange={() => this.alternarConclusao(item.id)}
+          trackColor={{ false: '#d9c4ec', true: '#c7afe7' }}
+          thumbColor={item.concluida ? '#9a7eaf' : '#e0c6a8'}
+        />
+        <TouchableOpacity onPress={() => this.excluirTarefa(item.id)}>
+          <Text style={styles.excluirBotao}>X</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 
@@ -86,14 +106,14 @@ class App extends Component {
 
         <Image
           source={{
-            uri: 'https://png.pngtree.com/png-clipart/20221231/original/pngtree-beauty-care-vector-logo-in-a-minimalist-vintage-style-lotus-flower-png-image_8837517.png', // Flor minimalista
+            uri: 'https://png.pngtree.com/png-clipart/20221231/original/pngtree-beauty-care-vector-logo-in-a-minimalist-vintage-style-lotus-flower-png-image_8837517.png',
           }}
           style={styles.florImagemEsquerda}
         />
 
         <Image
           source={{
-            uri: 'https://png.pngtree.com/png-clipart/20221231/original/pngtree-beauty-care-vector-logo-in-a-minimalist-vintage-style-lotus-flower-png-image_8837517.png', // Flor minimalista
+            uri: 'https://png.pngtree.com/png-clipart/20221231/original/pngtree-beauty-care-vector-logo-in-a-minimalist-vintage-style-lotus-flower-png-image_8837517.png',
           }}
           style={styles.florImagemDireita}
         />
@@ -135,8 +155,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
     padding: 10,
-    backgroundColor: '#f8f3f9', 
-    borderRadius: 16, 
+    backgroundColor: '#f8f3f9',
+    borderRadius: 16,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -145,7 +165,7 @@ const styles = StyleSheet.create({
   titulo: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#9a7eaf', 
+    color: '#9a7eaf',
     marginRight: 12,
     fontFamily: 'serif',
   },
@@ -157,7 +177,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     position: 'absolute',
-    top: 30, 
+    top: 30,
     left: -3,
     opacity: 0.8,
     transform: [{ rotate: '20deg' }],
@@ -166,8 +186,8 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     position: 'absolute',
-    top: 30, 
-    right: -3, 
+    top: 30,
+    right: -3,
     opacity: 0.8,
     transform: [{ rotate: '-20deg' }],
   },
@@ -228,6 +248,11 @@ const styles = StyleSheet.create({
   tarefaConcluida: {
     textDecorationLine: 'line-through',
     color: '#aaa',
+  },
+  excluirBotao: {
+    marginLeft: 10,
+    fontSize: 20,
+    color: '#5a4c74',
   },
 });
 
